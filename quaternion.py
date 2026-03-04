@@ -24,19 +24,22 @@ def quat_to_rot(q):
         [2*(x*y + eta*z), 2*(eta**2 + y**2) - 1, 2*(y*z - eta*x)],
         [2*(x*z - eta*y), 2*(y*z + eta*x), 2*(eta**2 + z**2) - 1]
     ])
-
-if __name__ == "__main__":
-    angle = np.rad2deg(65)
-    q_example = [np.cos(angle/2)]
-
-ax = fig.add_subplot(111, projection='3d')
+    
+if __name__=="__main__":
+    angle = np.deg2rad(45)
+    q_example = [np.cos(angle/2), 0, 0, np.sin(angle/2)]  # Rotation of 45 degrees around z-axis
+    R_quat = quat_to_rot(q_example)
+    print(R_quat)
+    
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
     plot_frame(ax, np.eye(3), np.array([1,0,0]), "World Frame", length=1)
-    plot_frame(ax, R_quat, np.array([0,0,0]), "Quaternion frame", length=1)
-
-ax.set_title("Quaternion rotation")
-
-ax.set_xlim(-1,1)
-ax.set_zlim(-1,1)
-ax.set_ylim(-1,1)
-
-plt.show()
+    plot_frame(ax, R_quat, np.array([0,0,0]), "Quaternion", length=1)
+    
+    ax.set_title("Rotation from Quaternion")
+    
+    ax.set_xlim(-1,1)
+    ax.set_ylim(-1,1)
+    ax.set_zlim(-1,1)   
+    
+    plt.show()
